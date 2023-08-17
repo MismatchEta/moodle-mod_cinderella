@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Activity index for the mod_cinderella plugin.
+ * Moodle hooks for the Cinderlla module.
  *
  * @package   mod_cinderella
  * @copyright 2023 Marcus Röhming <marcus.roehming@outlook.com>
@@ -24,8 +24,14 @@
 
 defined('MOODLE_INTERNAL') || die();    // prevents access from outside Moodle
 
-echo $OUTPUT->header();
-
-echo "Hello World!<br>";
-
-echo $OUTPUT->footer();
+### see https://moodledev.io/docs/apis/plugintypes/mod#libphp---library-functions
+### sample implementations:
+function cinderella_add_instance($instancedata, $mform = null): int {
+    return 1;
+}
+function cinderella_update_instance($instancedata, $mform): bool {
+    return false;
+}
+function cinderella_delete_instance($id): bool {
+    return false;
+}
