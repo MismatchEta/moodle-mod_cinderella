@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Activity index for the mod_cinderella plugin.
+ * Activity creation/editing form for the mod_cinderella plugin.
  *
  * @package   mod_cinderella
  * @copyright 2023 Marcus Röhming  <marcus.roehming@outlook.com>
@@ -23,32 +23,78 @@
  */
 
 ### see https://moodledev.io/docs/apis/plugintypes/mod#mod_formphp---instance-createedit-form
-### sample implementation:
+### and for Module Add-Forms: https://moodledev.io/docs/apis/subsystems/form/usage#use-in-activity-modules-add--update-forms
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
 require_once($CFG->dirroot.'/mod/cinderella/lib.php');
 
 class mod_cinderella_mod_form extends moodleform_mod {
 
     function definition() {
-        global $CFG, $DB, $OUTPUT;
+        global $CFG;
 
-        $mform =& $this->_form;
+        $mform = $this->_form;
 
-        $mform->addElement('text', 'name', get_string('certificatename', 'certificate'), ['size'=>'64']);
-        $mform->setType('name', PARAM_TEXT);
-        $mform->addRule('name', null, 'required', null, 'client');
-
-        $ynoptions = [
-            0 => get_string('no'),
-            1 => get_string('yes'),
-        ];
-        $mform->addElement('select', 'usecode', get_string('usecode', 'certificate'), $ynoptions);
-        $mform->setDefault('usecode', 0);
-        $mform->addHelpButton('usecode', 'usecode', 'certificate');
-
-        $this->standard_coursemodule_elements();
-
+        // General Header.
+        $this->make_general($mform);
+        
+        // Standard Elements.
+        $this->standard_coursemodule_elements(); // from moodleform_mod, MUST be called
         $this->add_action_buttons();
     }
 
+    /** Helper for definition() - Generates General Section
+     *  
+     * @param object $mform form object to be altered
+     */
+    function make_general(&$mform) {
+        global $CFG;
+
+        // General Header.
+        $mform->addElement('header', 'h_general', get_string('h_general', 'cinderella'));
+        
+        // The title of the activity.
+        $mform->addElement(
+            'text',
+            'name',
+            get_string('activitytitle', 'cinderella'),
+            ['size'=>'64']
+        );
+        $mform->setType('name', PARAM_TEXT);
+        $mform->addRule('name', null, 'required', null, 'client');
+        
+        // The description for the activity.
+        $this->standard_intro_elements();
+                
+        // The instruction for the activity.
+        $mform->addElement(
+            'editor',
+            'activityinstructions',
+            get_string('activityinstructions', 'cinderella')
+        );
+        $mform->setType('activityinstructions', PARAM_RAW); // No XSS prevention here, users must be trusted
+        $mform->addHelpButton(
+            'activityinstructions',
+            'activityinstructions_help',
+            get_string('activityinstructions_help','cinderella')
+        );
+        
+        // Filemanager to upload the Cinderella file to be displayed.
+        $mform->addElement(
+            'filemanager',
+            'cinderellafile',
+            get_string('cinderellafile', 'cinderella'),
+            null,
+            [
+                'subdirs' => 0,
+                'maxbytes' => 10485760, // 10 MByte.
+                'maxfiles' => 1,
+                'accepted_types' => ['.html'],
+                'return_types' => FILE_INTERNAL | FILE_EXTERNAL,
+                ]
+            );
+            $mform->addRule('cinderellafile', null, 'required', null, 'client');
+            $mform->addHelpButton('cinderellafile','cinderellafile_help', get_string('cinderellafile_help', 'cinderella'));
+        }
+
+        // Runs before post processing functions
  }

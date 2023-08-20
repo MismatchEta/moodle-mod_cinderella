@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Testplugin module version information
+ * Languages configuration for the mod_cinderella plugin.
  *
  * @package   mod_cinderella
  * @copyright 2023 Marcus Röhming <marcus.roehming@outlook.com>
@@ -24,6 +24,16 @@
 
 defined('MOODLE_INTERNAL') || die();    // prevents access from outside Moodle
 
-$string["pluginname"] = "Cinderella";   // see String API: https://docs.moodle.org/dev/String_API
-$string['modulename'] = 'Cinderella';   // displayed when activity is added
+$string["pluginname"] = 'Cinderella';   // see String API: https://docs.moodle.org/dev/String_API
+$string['modulename'] = 'Cinderella Activity';   // displayed when activity is added
+$string['modulenameplural'] = 'Cinderella Activities';   // displayed when activity is added
 $string['modulename_help'] = 'The Cinderella activity module allows a teacher to add a Cinderella file exported as html in their course.';
+$string['activitytitle'] = 'Activity Title';
+
+// From mod_form.php.
+$string['h_general'] = 'General';
+$string['activitydescription'] = 'Description';
+$string['activityinstructions'] = 'Instructions';
+$string['activityinstructions_help'] = 'Instructions on what you want your students to do in the activity, i.e. how they should interact with the Cinderella Application.';
+$string['cinderellafile'] = 'Cinderella HTML';
+$string['cinderellafile_help'] = 'Export your Cinderella File to html and upload it here.';

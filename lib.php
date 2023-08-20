@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Moodle hooks for the Cinderlla module.
+ * Moodle hooks for the mod_cinderella plugin.
  *
  * @package   mod_cinderella
  * @copyright 2023 Marcus Röhming <marcus.roehming@outlook.com>
@@ -26,12 +26,63 @@ defined('MOODLE_INTERNAL') || die();    // prevents access from outside Moodle
 
 ### see https://moodledev.io/docs/apis/plugintypes/mod#libphp---library-functions
 ### sample implementations:
+
+/**
+ * Adds an instance of a Cinderella activity
+ * 
+ * @param stdClass $instancedata
+ * @param mod_assign_mod_form $mform
+ * @return int The instance id of the new assignment 
+ */
 function cinderella_add_instance($instancedata, $mform = null): int {
-    return 1;
+    global $DB;
+
+    // Prepare data for DB table.
+    $instancedata->timecreated  = time();
+    $instancedata->timemodified = $instancedata->timecreated;
+
+    // Add to DB table and return the id.
+    return $DB->insert_record('cinderella', $instancedata);
 }
+
+/**
+ * Update Cinderella instance.
+ *
+ * @param stdClass $data
+ * @param stdClass $mform
+ * @return bool true
+ */
 function cinderella_update_instance($instancedata, $mform): bool {
-    return false;
+    global $DB;
+
+    //Prepare data for DB entry.
+    $instancedata->timemodified = time();
+    $instancedata->id = $instancedata->instance;
+
+    // Update DB table
+    return $DB->update_record('cinderella', $instancedata);
 }
+
+/**
+ * Delete Cinderella instance.
+ * @param int $id
+ * @return bool true
+ */
 function cinderella_delete_instance($id): bool {
-    return false;
+    global $DB;
+    // code copied from: https://github.com/alteregodeveloper/readingspeed/blob/master/lib.php
+
+    $record = $DB->get_record('cinderella', array('id'=>$id));
+    if (!$record) {
+        return false;
+    }
+    
+    $cm = get_coursemodule_from_instance('cinderella', $id);
+    \core_completion\api::update_completion_date_event($cm->id, 'cinderella', $id, null);
+
+    // note: all context files are deleted automatically
+
+    $DB->delete_records('cinderella', array('id'=>$record->id));
+
+    return true;
 }
