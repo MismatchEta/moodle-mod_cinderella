@@ -65,36 +65,18 @@ class mod_cinderella_mod_form extends moodleform_mod {
         // The description for the activity.
         $this->standard_intro_elements();
                 
-        // The instruction for the activity.
-        $mform->addElement(
-            'editor',
-            'activityinstructions',
-            get_string('activityinstructions', 'cinderella')
-        );
-        $mform->setType('activityinstructions', PARAM_RAW); // No XSS prevention here, users must be trusted
-        $mform->addHelpButton(
-            'activityinstructions',
-            'activityinstructions_help',
-            get_string('activityinstructions_help','cinderella')
-        );
-        
         // Filemanager to upload the Cinderella file to be displayed.
         $mform->addElement(
-            'filemanager',
+            'filepicker',
             'cinderellafile',
             get_string('cinderellafile', 'cinderella'),
             null,
             [
-                'subdirs' => 0,
                 'maxbytes' => 10485760, // 10 MByte.
-                'maxfiles' => 1,
-                'accepted_types' => ['.html'],
-                'return_types' => FILE_INTERNAL | FILE_EXTERNAL,
-                ]
-            );
-            $mform->addRule('cinderellafile', null, 'required', null, 'client');
-            $mform->addHelpButton('cinderellafile','cinderellafile_help', get_string('cinderellafile_help', 'cinderella'));
-        }
-
-        // Runs before post processing functions
+                'accepted_types' => ['.html', '.htm'],
+            ]
+        );
+        $mform->addRule('cinderellafile', null, 'required', null, 'client');
+        $mform->addHelpButton('cinderellafile','cinderellafile_help', get_string('cinderellafile_help', 'cinderella'));
+    }
  }

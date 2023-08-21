@@ -22,8 +22,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use function PHPSTORM_META\type;
-
 require('../../config.php');
 
 // Get the course instance to display by ID from GET (https://moodledev.io/docs/apis/plugintypes/mod#viewphp---view-an-activity)
@@ -33,25 +31,13 @@ $instance = $DB->get_record('cinderella', ['id'=> $cm->instance], '*', MUST_EXIS
 
 // Setup page.
 require_login($course, true, $cm);
+$PAGE->set_url('/mod/mymodulename/view.php', array('id' => $cm->id));
+$PAGE->set_title($instance->name);
+$PAGE->set_heading('My modules page heading');
 
 // Display page.
 echo $OUTPUT->header();
-
 echo strtoupper($OUTPUT->heading($instance->name));
-echo '<h1>Hello World: </h1>';
-
-echo '<p>cmid:' . var_dump($cmid) . '</p>';
-echo str_repeat('-', 100);
-echo '<br>';
-
-// echo 'Try $course, $cm*, $instance:';
-$var = $cm;
-
-echo get_class($var);
-echo '<ul>';
-foreach ($var as $key => $value) {
-    echo '<li>' . $key . " -> " . $value;
-}
-echo '</ul>';
+echo $instance->file;
 
 echo $OUTPUT->footer();

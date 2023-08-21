@@ -33,7 +33,5 @@ $string['activitytitle'] = 'Activity Title';
 // From mod_form.php.
 $string['h_general'] = 'General';
 $string['activitydescription'] = 'Description';
-$string['activityinstructions'] = 'Instructions';
-$string['activityinstructions_help'] = 'Instructions on what you want your students to do in the activity, i.e. how they should interact with the Cinderella Application.';
 $string['cinderellafile'] = 'Cinderella HTML';
 $string['cinderellafile_help'] = 'Export your Cinderella File to html and upload it here.';

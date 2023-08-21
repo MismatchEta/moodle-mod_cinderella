@@ -15,8 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version metadata for the mod_cinderella plugin.
- *
+ * This file contains the definition and functions for other parts of the plugin.
+ * 
  * @package   mod_cinderella
  * @copyright 2023 Marcus Röhming <marcus.roehming@outlook.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -24,10 +24,3 @@
 
 defined('MOODLE_INTERNAL') || die();    // prevents access from outside Moodle
 
-$plugin->version   = 2023082100;        // (required) The current module version (Date: YYYYMMDDXX).
-$plugin->requires  = 2023041800;        // (required) Required Moodle-Version
-$plugin->release   = 'alpha1';          // Release String
-$plugin->component = 'mod_cinderella';  // Full name of the plugin (used for diagnostics)
-$plugin->maturity  = MATURITY_ALPHA;
-$plugin->dependencies = array();        // contains list of dependencies
-$plugin->cron      = 0;

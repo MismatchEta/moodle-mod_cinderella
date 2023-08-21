@@ -24,11 +24,10 @@
 
 defined('MOODLE_INTERNAL') || die();    // prevents access from outside Moodle
 
-### see https://moodledev.io/docs/apis/plugintypes/mod#libphp---library-functions
-### sample implementations:
+require_once($CFG->dirroot.'/mod/cinderella/locallib.php');
 
 /**
- * Adds an instance of a Cinderella activity
+ * Add an instance of a Cinderella activity.
  * 
  * @param stdClass $instancedata
  * @param mod_assign_mod_form $mform
@@ -38,8 +37,9 @@ function cinderella_add_instance($instancedata, $mform = null): int {
     global $DB;
 
     // Prepare data for DB table.
-    $instancedata->timecreated  = time();
-    $instancedata->timemodified = $instancedata->timecreated;
+    $instancedata->timecreated    = time();
+    $instancedata->timemodified   = $instancedata->timecreated;
+    $instancedata->file           = $mform->get_file_content('cinderellafile');
 
     // Add to DB table and return the id.
     return $DB->insert_record('cinderella', $instancedata);
@@ -48,8 +48,8 @@ function cinderella_add_instance($instancedata, $mform = null): int {
 /**
  * Update Cinderella instance.
  *
- * @param stdClass $data
- * @param stdClass $mform
+ * @param stdClass $instancedata
+ * @param mod_assign_mod_form $mform
  * @return bool true
  */
 function cinderella_update_instance($instancedata, $mform): bool {
@@ -57,7 +57,8 @@ function cinderella_update_instance($instancedata, $mform): bool {
 
     //Prepare data for DB entry.
     $instancedata->timemodified = time();
-    $instancedata->id = $instancedata->instance;
+    $instancedata->id           = $instancedata->instance;
+    $instancedata->file         = $mform->get_file_content('cinderellafile');
 
     // Update DB table
     return $DB->update_record('cinderella', $instancedata);
