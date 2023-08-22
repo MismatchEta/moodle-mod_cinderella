@@ -36,14 +36,18 @@ class mod_cinderella_mod_form extends moodleform_mod {
 
         // General Header.
         $this->make_general($mform);
-        
+
+        // xAPI Header.
+        $this->make_xAPI($mform);
+
         // Standard Elements.
         $this->standard_coursemodule_elements(); // from moodleform_mod, MUST be called
         $this->add_action_buttons();
     }
 
-    /** Helper for definition() - Generates General Section
-     *  
+    /** 
+     * Helper for definition() - Generates General Section
+     * 
      * @param object $mform form object to be altered
      */
     function make_general(&$mform) {
@@ -77,6 +81,31 @@ class mod_cinderella_mod_form extends moodleform_mod {
             ]
         );
         $mform->addRule('cinderellafile', null, 'required', null, 'client');
-        $mform->addHelpButton('cinderellafile','cinderellafile_help', get_string('cinderellafile_help', 'cinderella'));
+        $mform->addHelpButton('cinderellafile','cinderellafile', 'cinderella');
+    }
+
+    /** 
+     * Helper for definition() - Generates xAPI Section
+     * 
+     * @param object &$mform pointer to form object to be altered
+     */
+    function make_xAPI(&$mform) {
+        
+        // xAPI Header.
+        $mform->addElement('header', 'h_xapi', get_string('h_xapi', 'cinderella'));
+
+        // DEV NOTICE
+        $mform->addElement('static', 'note_xapi', '*', get_string('note_xapi', 'cinderella'));
+
+        // LRS Settings.
+        $mform->addElement('text', 'lrs_endpoint', get_string('lrs_endpoint', 'cinderella'));
+        $mform->addElement('text', 'lrs_user', get_string('lrs_user', 'cinderella'));
+        $mform->addElement('text', 'lrs_password', get_string('lrs_password', 'cinderella'));
+
+        // xAPI Tracking Settings.
+        $verbs = ['moved',];
+        $mform->addElement('select', 'xapi_verb', get_string('xapi_verb', 'cinderella'), $verbs);
+        $mform->addElement('text', 'xapi_obj', get_string('xapi_obj', 'cinderella'));
+        $mform->setType('xapi_obj', PARAM_TEXT);
     }
  }

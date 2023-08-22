@@ -23,6 +23,7 @@
  */
 
 require('../../config.php');
+require_once('locallib.php');
 
 // Get the course instance to display by ID from GET (https://moodledev.io/docs/apis/plugintypes/mod#viewphp---view-an-activity)
 $cmid = required_param('id', PARAM_INT);
@@ -33,11 +34,10 @@ $instance = $DB->get_record('cinderella', ['id'=> $cm->instance], '*', MUST_EXIS
 require_login($course, true, $cm);
 $PAGE->set_url('/mod/mymodulename/view.php', array('id' => $cm->id));
 $PAGE->set_title($instance->name);
-$PAGE->set_heading('My modules page heading');
 
 // Display page.
 echo $OUTPUT->header();
-echo strtoupper($OUTPUT->heading($instance->name));
-echo $instance->file;
+
+echo build_cindy_html($instance);
 
 echo $OUTPUT->footer();

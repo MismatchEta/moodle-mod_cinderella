@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();    // prevents access from outside Moodle
 
-$plugin->version   = 2023082100;        // (required) The current module version (Date: YYYYMMDDXX).
+$plugin->version   = 2023082201;        // (required) The current module version (Date: YYYYMMDDXX).
 $plugin->requires  = 2023041800;        // (required) Required Moodle-Version
 $plugin->release   = 'alpha1';          // Release String
 $plugin->component = 'mod_cinderella';  // Full name of the plugin (used for diagnostics)

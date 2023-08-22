@@ -37,9 +37,11 @@ function cinderella_add_instance($instancedata, $mform = null): int {
     global $DB;
 
     // Prepare data for DB table.
+    $rawhtml = $mform->get_file_content('cinderellafile');
+    
     $instancedata->timecreated    = time();
     $instancedata->timemodified   = $instancedata->timecreated;
-    $instancedata->file           = $mform->get_file_content('cinderellafile');
+    $instancedata->file           = find_cindyobj_in_html($rawhtml);
 
     // Add to DB table and return the id.
     return $DB->insert_record('cinderella', $instancedata);
