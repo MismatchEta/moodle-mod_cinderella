@@ -61,7 +61,7 @@ class mod_cinderella_mod_form extends moodleform_mod {
             'text',
             'name',
             get_string('activitytitle', 'cinderella'),
-            ['size'=>'64']
+            ['size'=>'100%']
         );
         $mform->setType('name', PARAM_TEXT);
         $mform->addRule('name', null, 'required', null, 'client');
@@ -98,14 +98,38 @@ class mod_cinderella_mod_form extends moodleform_mod {
         $mform->addElement('static', 'note_xapi', '*', get_string('note_xapi', 'cinderella'));
 
         // LRS Settings.
-        $mform->addElement('text', 'lrs_endpoint', get_string('lrs_endpoint', 'cinderella'));
-        $mform->addElement('text', 'lrs_user', get_string('lrs_user', 'cinderella'));
-        $mform->addElement('text', 'lrs_password', get_string('lrs_password', 'cinderella'));
+        $mform->addElement(
+            'text', 
+            'lrs_endpoint', 
+            get_string('lrs_endpoint', 'cinderella'), 
+            ['size'=>'100%']
+        );
+        $mform->setType('lrs_endpoint', PARAM_URL);
+        $mform->addHelpButton('lrs_endpoint','lrs_endpoint', 'cinderella');
+
+        $mform->addElement(
+            'text', 
+            'lrs_user', 
+            get_string('lrs_user', 'cinderella'), 
+            ['size'=>'100%']
+        );
+        $mform->setType('lrs_user', PARAM_TEXT);
+        $mform->addHelpButton('lrs_user','lrs_user', 'cinderella');
+
+        $mform->addElement(
+            'passwordunmask', 
+            'lrs_password', 
+            get_string('lrs_password', 'cinderella')
+        );
 
         // xAPI Tracking Settings.
-        $verbs = ['moved',];
-        $mform->addElement('select', 'xapi_verb', get_string('xapi_verb', 'cinderella'), $verbs);
-        $mform->addElement('text', 'xapi_obj', get_string('xapi_obj', 'cinderella'));
-        $mform->setType('xapi_obj', PARAM_TEXT);
+        $mform->addElement(
+            'text', 
+            'xapi_string', 
+            get_string('xapi_string', 'cinderella'),
+            ['size'=>'100%']
+        );
+        $mform->setType('xapi_string', PARAM_TEXT);
+        $mform->addHelpButton('xapi_string','xapi_string', 'cinderella');
     }
  }

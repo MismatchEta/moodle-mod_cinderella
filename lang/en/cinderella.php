@@ -36,9 +36,13 @@ $string['activitydescription'] = 'Description';
 $string['cinderellafile'] = 'Cinderella HTML';
 $string['cinderellafile_help'] = 'Export your Cinderella File to html and upload it here.';
 $string['h_xapi'] = 'LRS and xAPI';
-$string['note_xapi'] = 'xAPI Functionality is not fully support yet';
+$string['note_xapi'] = 'xAPI Functionality is not fully supported yet';
 $string['lrs_endpoint'] = 'LRS Endpoint';
+$string['lrs_endpoint_help'] = 'URL to the LRS to connect to.';
 $string['lrs_user'] = 'LRS User';
+$string['lrs_user_help'] = 'User needs write permissions. Check your LRS settings.';
 $string['lrs_password'] = 'LRS Password';
-$string['xapi_verb'] = 'xAPI Verb';
-$string['xapi_obj'] = 'xAPI Object';
+$string['xapi_string'] = 'xAPI Verbs & Objects';
+$string['xapi_string_help'] = 'A list of allowed verb-object patterns you want to track seperated by comma. E.g. "moved P, moved Q".
+Objects MUST be names of objects in the uploaded cinderella file.
+Allowed verbs: moved'; // TODO: Update, also add a link.

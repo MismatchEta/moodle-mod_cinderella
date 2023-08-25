@@ -36,12 +36,13 @@ require_once($CFG->dirroot.'/mod/cinderella/locallib.php');
 function cinderella_add_instance($instancedata, $mform = null): int {
     global $DB;
 
-    // Prepare data for DB table.
+    // Prepare data for DB entry.
     $rawhtml = $mform->get_file_content('cinderellafile');
     
-    $instancedata->timecreated    = time();
-    $instancedata->timemodified   = $instancedata->timecreated;
-    $instancedata->file           = find_cindyobj_in_html($rawhtml);
+    $instancedata->timecreated  = time();
+    $instancedata->timemodified = $instancedata->timecreated;
+    $instancedata->file         = find_cindyobj_in_html($rawhtml);
+    $instancedata->xapi_string  = xapi_string_to_list($instancedata->xapi_string);
 
     // Add to DB table and return the id.
     return $DB->insert_record('cinderella', $instancedata);
@@ -57,12 +58,15 @@ function cinderella_add_instance($instancedata, $mform = null): int {
 function cinderella_update_instance($instancedata, $mform): bool {
     global $DB;
 
-    //Prepare data for DB entry.
+    // Prepare data for DB entry.
+    $rawhtml = $mform->get_file_content('cinderellafile');
+
     $instancedata->timemodified = time();
     $instancedata->id           = $instancedata->instance;
-    $instancedata->file         = $mform->get_file_content('cinderellafile');
+    $instancedata->file         = find_cindyobj_in_html($rawhtml);
+    $instancedata->xapi_string  = xapi_string_to_list($instancedata->xapi_string);
 
-    // Update DB table
+    // Update DB table and return true
     return $DB->update_record('cinderella', $instancedata);
 }
 
@@ -74,7 +78,8 @@ function cinderella_update_instance($instancedata, $mform): bool {
 function cinderella_delete_instance($id): bool {
     global $DB;
     // code copied from: https://github.com/alteregodeveloper/readingspeed/blob/master/lib.php
-
+    // TODO: revise
+    
     $record = $DB->get_record('cinderella', array('id'=>$id));
     if (!$record) {
         return false;

@@ -40,4 +40,22 @@ echo $OUTPUT->header();
 
 echo build_cindy_html($instance);
 
+// SAMPLE: Output query from the LRS. Just for demonstration.
+// TODO: REMOVE (also remove the corresponding onmouseup event in locallib.php on the CSCanvas div)
+echo '<h3>Sample Output from LRS query.</h3>';
+echo '<p>This displays a list of the users last moves.<br>The most recent on being the first in the list.<br>The list updates on mouseUp on the Cinderella application.</p>';
+echo '<ul id="query-results">
+        <li>Placeholder li.</li>
+        <li>Second placeholder li.</li>
+    </ul>';
+
+// DEBUG
+echo "<br><br><br><br><h6>Just for reference</h3>";
+echo "First name " . $USER->firstname . '<br>';
+echo "Last name " . $USER->lastname . '<br>';
+echo "Username " . $USER->username . '<br>';
+echo "Email " . $USER->email . '<br>';
+
+// debug_dump($USER);
+
 echo $OUTPUT->footer();
